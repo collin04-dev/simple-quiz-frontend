@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html>
+    <head>
+        <title>Quiz App</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+
+        <style>
+        
+            body {
+                text-align: center;
+                background-image: url(img/sunset.jpg);
+                background-size: cover;
+                background-repeat: no-repeat;
+                font-family: 'Kalam', cursive;
+                color: #fff;
+                font-size: 20px;
+                
+            }
+
+            .jumbotron {
+                background: none;
+            }
+
+            button {
+                margin: 10px;
+                margin-bottom: 20px;
+            }
+
+            .answer {
+                border: 2px solid #fff;
+            }
+
+            .correct {
+                border-color: #090;
+                color: #090;
+            }
+
+            .wrong {
+                border-color: #900;
+                color: #900;
+            }
+
+            .form-control {
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @keyframes gradient {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Just a Simple Quiz</h1>
+                <p class="lead">I don't know why I keep putting these types of backgrounds in my projects...</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="question1">What word is spelled incorrectly in the dictionary? <span id="symbol1"></span></label>
+            <input type="text" class="form-control" id="question1" placeholder="One Word Answer..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="question2">What is really at the end of every rainbow? <span id="symbol2"></span></label>
+            <input type="text" class="form-control" id="question2" placeholder="One Word Answer...Sort of" required>
+        </div>
+
+        <div class="form-group">
+            <label for="question3">What 5-Letter word becomes shorter when you add two letter to it? <span id="symbol3"></span></label>
+            <input type="text" class="form-control" id="question3" placeholder="One Word Answer..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="question3">I'm so fragile that if you say my name, you'll break me. What am I? <span id="symbol4"></span></label>
+            <input type="text" class="form-control" id="question4" placeholder="One Word Answer..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="question4">We see it once in a year, twice in a week, and never in a day. What is it? <span id="symbol5"></span></label>
+            <input type="text" class="form-control" id="question5" placeholder="One Word Answer...Sort of" required>
+        </div>
+
+        <div class="from-group">
+            <button onClick="checkAnswers();" class="btn btn-outline-primary">Check Answers</button>
+            <button onclick="clearAnswers();" class="btn btn-outline-danger">Clear Answers</button>
+        </div>
+
+        <div class="form-group">
+            <p>Maybe a little music while you think...?</p>
+            <audio controls loop><source src="mp3/background.mp3" type="audio/mpeg">Your Browser Does Not Support This Audio</audio>
+        </div>
+
+        
+
+
+
+
+
+        <script>
+
+            function getAnswers(text) {
+                console.log(text);
+                let answers = document.getElementById(text);
+                return answers.value;
+            }
+
+            function checkAnswers() {
+                let solutions = ["Incorrectly", "W", "Short", "Silence", "E"];
+
+                for (let x = 0; x < 5; x++) {
+                    let questionId = x + 1;
+                    let answer = getAnswers("question" + questionId);
+                    let final = answer.toLowerCase();
+                    gradeAnswers(questionId, final == solutions[x].toLowerCase());
+                }
+            }
+
+            function gradeAnswers(questionId, grade){
+                let gradingResult = grade ? "form-control answer correct" : "form-control answer wrong";
+                let gradingSymbol = grade ? '<i class="fa fa-check correct back" aria-hidden="true"></i>' : '<i class="fa fa-close wrong back" aria-hidden="true"></i>';
+                document.getElementById("question" + questionId).className = gradingResult;
+                document.getElementById("symbol" + questionId).innerHTML = gradingSymbol;
+                
+            }
+
+            function clearAnswers() {
+                for (let x = 1; x < 6; x++) {
+                    let clear = document.getElementById("question" + x);
+                    clear.value = null;
+                    clear.className = null;
+                    clear.classList.add("form-control");
+                    document.getElementById("symbol" + x).innerHTML = null;
+                }
+            }
+
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
+</html>
